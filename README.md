@@ -9,16 +9,45 @@
 ## vite-plugin-compression
 
 ```shell
-npm i vite-plugin-compression -D
 # 用于打包压缩资源的
 # 文档https://github.com/anncwb/vite-plugin-compression/tree/main#readme
 ```
 
-## element-plus
+## vite-plugin-element-plus
 
 ```shell
-npm install element-plus --save
-# element-ui组件库  这个版本能更好地和 vite打包工具配合使用
-# 推荐引入全部的样式文件并按需引入组件，因为ElementPlus已经支持摇树优化
+# 按需引入elemen-plus
+```
+
+
+
+## 安装依赖
+
+```shell
+npm install
+```
+
+## 本地开发环境
+
+```shell
+npm run dev
+```
+
+## 测试环境打包
+
+```shell
+npm run buildTest
+```
+
+## 生产环境打包
+
+```shell
+npm run buildProd
+```
+
+## 检测依赖升级
+
+```shell
+npm run update
 ```
 

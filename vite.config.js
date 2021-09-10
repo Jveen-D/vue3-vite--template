@@ -8,13 +8,14 @@ import viteCompression from 'vite-plugin-compression'
 import VitePluginElementPlus from 'vite-plugin-element-plus'
 
 export default defineConfig({
+  base: '/elementDemo', // 生产环境中的基本路径
   plugins: [
     vue(),
     viteCompression({
       filter: /\.(js|mjs|json|css|html|png|ico)$/i
     }),
     VitePluginElementPlus({
-      format: process.env.NODE_ENV === 'development' ? 'esm' : 'cjs',
+      format: process.env.NODE_ENV === 'development' ? 'cjs' : 'esm',
     })
   ],
   resolve: {
