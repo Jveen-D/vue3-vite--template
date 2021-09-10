@@ -4,12 +4,17 @@ import vue from '@vitejs/plugin-vue'
 //vite-plugin-compression，使用gzip或brotli来压缩资源
 import viteCompression from 'vite-plugin-compression'
 
-// https://vitejs.dev/config/
+// vite-plugin-element-plus，element按需加载
+import VitePluginElementPlus from 'vite-plugin-element-plus'
+
 export default defineConfig({
   plugins: [
     vue(),
     viteCompression({
       filter: /\.(js|mjs|json|css|html|png|ico)$/i
+    }),
+    VitePluginElementPlus({
+      format: process.env.NODE_ENV === 'development' ? 'esm' : 'cjs',
     })
   ],
   resolve: {
