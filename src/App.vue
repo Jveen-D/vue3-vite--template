@@ -4,7 +4,6 @@
 </template>
 
 <script setup>
-import { ElButton, ElInput } from 'element-plus'
 
 </script>
 

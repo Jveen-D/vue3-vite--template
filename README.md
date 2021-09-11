@@ -52,6 +52,5 @@ npm run update
 
 ```shell
 # element按需加载组件和样式，默认使用esm模块
-# 使用组件例 import { ElButton, ElInput } from 'element-plus'
 ```
 
