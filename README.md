@@ -17,16 +17,10 @@ npm install
 npm run dev
 ```
 
-## 测试环境打包
-
-```shell
-npm run buildTest
-```
-
 ## 生产环境打包
 
 ```shell
-npm run buildProd
+npm run build
 ```
 
 ## 检测依赖升级
