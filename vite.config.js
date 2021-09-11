@@ -1,22 +1,21 @@
-const { resolve } = require('path')
-import { defineConfig } from 'vite'
-import vue from '@vitejs/plugin-vue'
+const { resolve } = require('path');
+import { defineConfig } from 'vite';
+import vue from '@vitejs/plugin-vue';
 //vite-plugin-compression，使用gzip或brotli来压缩资源
-import viteCompression from 'vite-plugin-compression'
+import viteCompression from 'vite-plugin-compression';
 
-// vite-plugin-element-plus，element按需加载
-import VitePluginElementPlus from 'vite-plugin-element-plus'
+// vite-plugin-element-plus，element按需加载组件和样式，默认使用esm模块
+import VitePluginElementPlus from 'vite-plugin-element-plus';
+
 
 export default defineConfig({
-  base: '/elementDemo', // 生产环境中的基本路径
+  base: '', // 生产环境中的基本路径 例如/elementDemo
   plugins: [
     vue(),
     viteCompression({
-      filter: /\.(js|mjs|json|css|html|png|ico)$/i
+      filter: /\.(js|mjs|json|css|html|png|ico)$/i,
     }),
-    VitePluginElementPlus({
-      format: process.env.NODE_ENV === 'development' ? 'cjs' : 'esm',
-    })
+    VitePluginElementPlus(),
   ],
   resolve: {
     alias: {
@@ -28,9 +27,8 @@ export default defineConfig({
       '/api': {
         target: 'http://124.71.57.28:8090/api',
         changeOrigin: true,
-        rewrite: ( path ) => path.replace(/^\/api/, ''),
+        rewrite: (path) => path.replace(/^\/api/, ''),
       },
     },
   },
-
-})
+});
