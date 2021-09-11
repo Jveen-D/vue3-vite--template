@@ -3,6 +3,7 @@
 `<script setup>` 文档 [script setup docs](https://v3.cn.vuejs.org/api/sfc-script-setup.html) 
 
 这是最简化的版本，其中包含了`router`、`eslint`、`prettier`、`tailwindcss`
+前端路由为`hash`模式
 
 ## 安装依赖
 
