@@ -1,5 +1,5 @@
 const { resolve } = require('path');
-import { defineConfig } from 'vite';
+import { defineConfig, loadEnv } from 'vite';
 import vue from '@vitejs/plugin-vue';
 //vite-plugin-compression，使用gzip或brotli来压缩资源
 import viteCompression from 'vite-plugin-compression';
@@ -8,27 +8,32 @@ import viteCompression from 'vite-plugin-compression';
 import VitePluginElementPlus from 'vite-plugin-element-plus';
 
 
-export default defineConfig({
-  base: '', // 生产环境中的基本路径 例如/elementDemo
-  plugins: [
-    vue(),
-    viteCompression({
-      filter: /\.(js|mjs|json|css|html|png|ico)$/i,
-    }),
-    VitePluginElementPlus(),
-  ],
-  resolve: {
-    alias: {
-      '@': resolve(__dirname, 'src'),
-    },
-  },
-  server: {
-    proxy: {
-      '/api': {
-        target: 'http://124.71.57.28:8090/api',
-        changeOrigin: true,
-        rewrite: (path) => path.replace(/^\/api/, ''),
+export default defineConfig(({mode})=>{
+  const env = loadEnv(mode, __dirname);
+  return{
+    base: env.VITE_BASE_URL,
+    plugins: [
+      vue(),
+      viteCompression({
+        filter: /\.(js|mjs|json|css|html|png|ico)$/i,
+      }),
+      VitePluginElementPlus({
+        format: env.VITE_MODE_NAME === 'development' ? 'esm' : 'cjs',
+      }),
+    ],
+    resolve: {
+      alias: {
+        '@': resolve(__dirname, 'src'),
       },
     },
-  },
+    server: {
+      proxy: {
+        '/api': {
+          target: 'http://124.71.57.28:8090/api',
+          changeOrigin: true,
+          rewrite: (path) => path.replace(/^\/api/, ''),
+        },
+      },
+    },
+  }
 });
