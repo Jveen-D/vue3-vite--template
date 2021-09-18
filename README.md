@@ -35,7 +35,7 @@ npm run update
 - 环境配置统一在`.env[mode]`文件中
 - 使用`element-plus`需要按需引入
 
-## `vite.config.js`配置说明
+## `vite.config.ts`配置说明
 
 ### `loadEnv`函数
 

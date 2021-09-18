@@ -3,8 +3,9 @@
   <el-input/>
 </template>
 
-<script setup>
-
+<script lang="ts" setup>
+  import {ref} from 'vue'
+  const test:any = ref('2s')
 </script>
 
 <style>

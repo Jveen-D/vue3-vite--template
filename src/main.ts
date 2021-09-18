@@ -1,6 +1,6 @@
 import { createApp } from 'vue';
 import 'tailwindcss/tailwind.css';
-import router from './router/index';
+import router from './router';
 import App from './App.vue';
 
 // 按需引入element-plus组件
