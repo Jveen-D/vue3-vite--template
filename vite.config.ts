@@ -1,39 +1,79 @@
+import type { UserConfig, ConfigEnv } from 'vite';
+import { loadEnv } from 'vite';
 const { resolve } = require('path');
-import { defineConfig, loadEnv } from 'vite';
 import vue from '@vitejs/plugin-vue';
-//vite-plugin-compression，使用gzip或brotli来压缩资源
+// 压缩
 import viteCompression from 'vite-plugin-compression';
+import { createProxy } from './build/vite/proxy';
+import { wrapperEnv } from './build/utils';
 
-// vite-plugin-element-plus，element按需加载组件和样式，默认使用esm模块
-import VitePluginElementPlus from 'vite-plugin-element-plus';
+// 自动导入element-plus
+import Components from 'unplugin-vue-components/vite'
+import { ElementPlusResolver } from 'unplugin-vue-components/resolvers'
 
+function pathResolve(dir: string) {
+  return resolve(process.cwd(), '.', dir);
+}
 
-export default defineConfig(({mode})=>{
-  const env = loadEnv(mode, __dirname);
+export default ({ mode }: ConfigEnv): UserConfig => {
+  // mode 当前开发环境
+
+  // root项目根目录
+  const root = process.cwd();
+
+  const env = loadEnv(mode, root);
+
+  // 由loadEnv读取的布尔类型是一个字符串。此函数可以转换为布尔类型
+  const viteEnv = wrapperEnv(env);
+
+  /*
+  * VITE_PORT         开发服务器端口
+  * VITE_PUBLIC_PATH  指定输出路径
+  * VITE_PROXY        代理
+  * VITE_DROP_CONSOLE 打包去除console
+  * */
+  const { VITE_OUTPUT_DIR,VITE_PORT, VITE_PUBLIC_PATH, VITE_PROXY, VITE_DROP_CONSOLE } = viteEnv;
+
   return{
-    base: env.VITE_BASE_URL,
+    base: VITE_PUBLIC_PATH,
+    root,
     plugins: [
-      vue(),
-      viteCompression({
-        filter: /\.(js|mjs|json|css|html|png|ico)$/i,
-      }),
-      VitePluginElementPlus({
-        format: env.VITE_MODE_NAME === 'development' ? 'esm' : 'cjs',
+      vue(), 
+      viteCompression(),
+      Components({
+        resolvers: [ElementPlusResolver()],
       }),
     ],
-    resolve: {
-      alias: {
-        '@': resolve(__dirname, 'src'),
-      },
-    },
-    server: {
-      proxy: {
-        '/api': {
-          target: 'http://124.71.57.28:8090/api',
-          changeOrigin: true,
-          rewrite: (path) => path.replace(/^\/api/, ''),
+    build: {
+      target: 'es2015',
+      outDir: VITE_OUTPUT_DIR,
+      terserOptions: {
+        compress: {
+          keep_infinity: true,
+          drop_console: VITE_DROP_CONSOLE,
         },
       },
+      // 使用brotli进行压缩
+      brotliSize: true,
+      chunkSizeWarningLimit: 2000,
+    },
+    resolve: {
+      alias: [
+        // /@/xxxx => src/xxxx
+        {
+          find: /\/@\//,
+          replacement: pathResolve('src') + '/',
+        },
+        // /#/xxxx => types/xxxx
+        {
+          find: /\/#\//,
+          replacement: pathResolve('types') + '/',
+        },
+      ],
+    },
+    server: {
+      port: VITE_PORT,
+      proxy: createProxy(VITE_PROXY)
     },
   }
-});
+}

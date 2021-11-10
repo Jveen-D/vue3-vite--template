@@ -1,16 +1,14 @@
 import { createApp } from 'vue';
-import 'tailwindcss/tailwind.css';
 import router from './router';
+import { store } from './store/store';
 import App from './App.vue';
+import './App.css';
 
-// 按需引入element-plus组件
-import { ElButton, ElInput } from 'element-plus'
 
-const app = createApp(App);
-app.use(router);
-app.config.globalProperties.$ELEMENT = {
-    size: 'small', zIndex: 3000
-}
-app.use(ElButton);
-app.use(ElInput);
+
+
+
+const app = createApp(App)
+app.use(router)
+app.use(store)
 app.mount('#app');
