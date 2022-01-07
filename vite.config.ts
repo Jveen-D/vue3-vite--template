@@ -1,3 +1,8 @@
+/*
+ * @Date: 2022-01-06 13:55:03
+ * @LastEditors: dwj18066042960
+ * @FilePath: /vue3-vite--template/vite.config.ts
+ */
 import type { UserConfig, ConfigEnv } from 'vite';
 import { loadEnv } from 'vite';
 const { resolve } = require('path');
@@ -8,6 +13,7 @@ import { createProxy } from './build/vite/proxy';
 import { wrapperEnv } from './build/utils';
 
 // 自动导入element-plus
+import AutoImport from 'unplugin-auto-import/vite'
 import Components from 'unplugin-vue-components/vite'
 import { ElementPlusResolver } from 'unplugin-vue-components/resolvers'
 
@@ -40,6 +46,9 @@ export default ({ mode }: ConfigEnv): UserConfig => {
     plugins: [
       vue(), 
       viteCompression(),
+      AutoImport({
+        resolvers: [ElementPlusResolver()],
+      }),
       Components({
         resolvers: [ElementPlusResolver()],
       }),
