@@ -1,40 +1,35 @@
+/*
+ * @Date: 2021-06-28 10:55:47
+ * @LastEditors: dwj18066042960
+ * @LastEditTime: 2022-01-07 13:44:37
+ * @FilePath: /vue3-vite--template/src/router/index.ts
+ */
 import { createRouter, createWebHistory } from 'vue-router';
-import Layout from '/@/layout/layout.vue';
 
 const routes = [
   {
     path: '/',
-    name: 'index',
-    redirect: '/homePage',
+    name: 'Index',
+    redirect: '/home',
     meta: {
-      title: 'xxx',
+      title: 'xxxx!',
     },
-    component: Layout,
-    children:[
-      {
-        path:'/homePage',
-        name:'homePage',
-        meta: {
-          title: 'xxx',
-        },
-        component: () => import('/@/pages/homePage/homePage.vue'),
-      }
-    ]
+  },
+  {
+    path: '/home',
+    name: 'Home',
+    meta: {
+      title: 'home',
+    },
+    component: () => import('/@/pages/home/home.vue'),
   },
   {
     path: '/:catchAll(.*)',
     name: 'Notfound',
     meta: {
-      title: 'Vvvvv-Blog! not fount',
+      title: 'not fount',
     },
-    component: Layout,
-    children: [
-      {
-        path: '/:catchAll(.*)',
-        name: 'test',
-        component: () => import('/@/pages/notFound/index.vue'),
-      },
-    ],
+    component: () => import('/@/pages/notFound/index.vue'),
   },
 ];
 const router = createRouter({
@@ -43,6 +38,9 @@ const router = createRouter({
 });
 router.beforeEach((to) => {
   document.title = to.meta.title as string;
+});
+router.isReady().then(() => {
+  
 });
 
 export default router;

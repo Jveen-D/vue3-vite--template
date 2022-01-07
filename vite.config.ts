@@ -1,25 +1,20 @@
 /*
- * @Date: 2022-01-06 13:55:03
+ * @Date: 2022-01-07 11:03:05
  * @LastEditors: dwj18066042960
  * @FilePath: /vue3-vite--template/vite.config.ts
  */
 import type { UserConfig, ConfigEnv } from 'vite';
 import { loadEnv } from 'vite';
-const { resolve } = require('path');
+import { resolve } from 'path';
 import vue from '@vitejs/plugin-vue';
-// 压缩
 import viteCompression from 'vite-plugin-compression';
 import { createProxy } from './build/vite/proxy';
 import { wrapperEnv } from './build/utils';
 
-// 自动导入element-plus
-import AutoImport from 'unplugin-auto-import/vite'
-import Components from 'unplugin-vue-components/vite'
-import { ElementPlusResolver } from 'unplugin-vue-components/resolvers'
-
 function pathResolve(dir: string) {
   return resolve(process.cwd(), '.', dir);
 }
+
 
 export default ({ mode }: ConfigEnv): UserConfig => {
   // mode 当前开发环境
@@ -43,16 +38,7 @@ export default ({ mode }: ConfigEnv): UserConfig => {
   return{
     base: VITE_PUBLIC_PATH,
     root,
-    plugins: [
-      vue(), 
-      viteCompression(),
-      AutoImport({
-        resolvers: [ElementPlusResolver()],
-      }),
-      Components({
-        resolvers: [ElementPlusResolver()],
-      }),
-    ],
+    plugins: [vue(), viteCompression()],
     build: {
       target: 'es2015',
       outDir: VITE_OUTPUT_DIR,

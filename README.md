@@ -1,7 +1,7 @@
 <!--
- * @Date: 2021-07-26 19:19:05
+ * @Date: 2021-06-28 10:55:47
  * @LastEditors: dwj18066042960
- * @FilePath: \Vvvvv-template\README.md
+ * @FilePath: \Vvvvv-Blog\README.md
 -->
 # Vvvvv-Blog
 
@@ -15,7 +15,6 @@ npm run dev
 #
 npm run build
 ```
-
 ##### git commit type
 ```tex
 feat :新功能 

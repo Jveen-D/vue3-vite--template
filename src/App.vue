@@ -1,7 +1,15 @@
+<!--
+ * @Date: 2021-12-01 15:33:26
+ * @LastEditors: dwj18066042960
+ * @FilePath: /vue3-vite--template/src/App.vue
+-->
 <template>
-  <div>
     <suspense>
       <router-view />
     </suspense>
-  </div>
 </template>
+<script lang="ts" setup>
+  import { tailwindTheme } from './utils/tailwind/tailwindTheme';
+  const { changeTheme } = tailwindTheme();
+  changeTheme(localStorage.theme);
+</script>
